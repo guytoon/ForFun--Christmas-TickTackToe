@@ -13,6 +13,21 @@
                 },
                 isPlayersTurn: function () {
                     return ((tickTackToe.state.currentTurn % 2) === 0);
+                },
+                score: {
+                    player: 0,
+                    ai: 0,
+                    draws: 0,
+                    playerWin: function () {
+                        tickTackToe.state.score.player += 1;
+                    },
+                    aiWin: function () {
+                        tickTackToe.state.score.ai += 1;
+                    },
+                    draw: function ()
+                    {
+                        tickTackToe.state.score.draw += 1;
+                    }
                 }
             },
             selectors: {
