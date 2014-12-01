@@ -1,0 +1,39 @@
+* { margin:0; padding:0; border:0; 
+
+}
+.board {
+    position:relative;
+    width:606px;
+    height:606px;
+    border:1px solid black;
+    background:grey;
+}
+.cell {
+    float:left;
+    width:200px;
+    height:200px;
+    border:1px solid black;
+}
+
+.board .message {
+    position:absolute;
+    width:498px;
+    height:498px;
+    top:50px;
+    left:50px;
+    background: #ffffff;
+}
+.board .message { display: none; }
+
+.board .message.win,
+.board .message.lose,
+.board .message.draw { display: block; }
+
+.board .message .win,
+.board .message .lose,
+.board .message .draw { display:none; }
+
+.board .message.win .win { display: block; }
+.board .message.draw .draw { display:block; }
+.board .message.lose .lose { display:block; }
+
