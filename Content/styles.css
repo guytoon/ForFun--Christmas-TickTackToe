@@ -37,3 +37,5 @@
 .board .message.draw .draw { display:block; }
 .board .message.lose .lose { display:block; }
 
+.cell[data-selected="player"] {background:green;}
+.cell[data-selected="ai"] {background:red;}

@@ -34,9 +34,9 @@
                 board: '.board',
                 boardCell: '.cell',
                 scoreBoard: '.score-board',
-                playerScore: tickTackToe.selectors.scoreBoard + ' .player span',
-                aiScore: tickTackToe.selectors.scoreBoard + ' .ai span',
-                drawScore: tickTackToe.selectors.scoreBoard + ' .draw span'
+                playerScore: '.score-board .player span',
+                aiScore: '.score-board .ai span',
+                drawScore: '.score-board .draw span'
             },
             init: function () {
                 tickTackToe.modules.ui.init(tickTackToe.modules.ui);
@@ -53,10 +53,8 @@
                         // Need to add some calculation logic here,
                         // would be good to reuse game win condition functionlity
                         var openCells = $Dom.find('.cell:not(.used)');
-                        console.log(openCells.first());
                         openCells.first().addClass('used');
-                        openCells.first().attr('selected', 'ai');
-                        openCells.first().css('background', 'red');
+                        openCells.first().attr('data-selected', 'ai');
                         tickTackToe.state.nextTurn();
                         tickTackToe.modules.board.processBoard();
                     }
@@ -76,19 +74,61 @@
                     checkForWin: function ()
                     {
                         var result = false;
+
+                        // Horrendus search // Just done for POC
+                        var $cells = $('.cell')
+
+                        if ($($cells[0]).attr('data-selected') !== undef)
+                        {
+                            if ($($cells[0]).attr('data-selected') === $($cells[1]).attr('data-selected') &&
+                                $($cells[0]).attr('data-selected') === $($cells[2]).attr('data-selected'))
+                            {
+                                result = true;
+                            }
+                            if ($($cells[0]).attr('data-selected') === $($cells[3]).attr('data-selected') &&
+                                $($cells[0]).attr('data-selected') === $($cells[6]).attr('data-selected')) {
+                                result = true;
+                            }
+                            if ($($cells[0]).attr('data-selected') === $($cells[4]).attr('data-selected') &&
+                                $($cells[0]).attr('data-selected') === $($cells[8]).attr('data-selected')) {
+                                alert('horizontal true');
+                                result = true;
+                            }
+                        }
+                        if ($($cells[3]).attr('data-selected') !== undef)
+                        {
+                            if ($($cells[3]).attr('data-selected') === $($cells[4]).attr('data-selected') &&
+                                $($cells[3]).attr('data-selected') === $($cells[5]).attr('data-selected')) {
+                                alert('middle row matched');
+                                result = true;
+                            }
+                        }
+
+                        if ($($cells[6]).attr('data-selected') !== undef) {
+                            if ($($cells[6]).attr('data-selected') === $($cells[7]).attr('data-selected') &&
+                                $($cells[6]).attr('data-selected') === $($cells[8]).attr('data-selected')) {
+                                alert('middle row matched');
+                                result = true;
+                            }
+                            if ($($cells[6]).attr('data-selected') === $($cells[4]).attr('data-selected') &&
+                               $($cells[6]).attr('data-selected') === $($cells[2]).attr('data-selected')) {
+                                alert('horizontal true');
+                                result = true;
+                            }
+                        }
+
+
+
+
+
+
+                        
+
                         if (tickTackToe.state.currentTurn === 9)
                         {
                             $('.message').addClass('draw');
                             result = true;
                         }
-                            
-                        var $cells = $('.cell');
-                        // check for win x axis
-                        // check for win y axis
-                        // check for win horz
-                        // Not really the most eff
-                        // should use smart check alg,
-                        // but not sure if its needed for this small calc
                         return result;
                     }
                 },
@@ -103,7 +143,6 @@
                                 $Dom.find('.cell').removeClass('used');
                                 $Dom.find('.cell').removeClass('player1');
                                 $Dom.find('.cell').removeClass('player2');
-                                $Dom.find('.cell').css('background', 'white');
                                 tickTackToe.state.currentTurn = 0;
                                 $('.message').attr('class', 'message');
                             });
@@ -116,8 +155,7 @@
                                 !$this.hasClass('used'))
                             {
                                 $this.addClass('used');
-                                $this.addClass('player1');
-                                $this.css('background', 'green');
+                                $this.attr('data-selected','player');
 
                                 tickTackToe.modules.board.processBoard();
                             }
