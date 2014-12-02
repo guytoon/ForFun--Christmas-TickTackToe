@@ -31,7 +31,12 @@
                 }
             },
             selectors: {
-
+                board: '.board',
+                boardCell: '.cell',
+                scoreBoard: '.score-board',
+                playerScore: tickTackToe.selectors.scoreBoard + ' .player span',
+                aiScore: tickTackToe.selectors.scoreBoard + ' .ai span',
+                drawScore: tickTackToe.selectors.scoreBoard + ' .draw span'
             },
             init: function () {
                 tickTackToe.modules.ui.init(tickTackToe.modules.ui);
@@ -50,7 +55,7 @@
                         var openCells = $Dom.find('.cell:not(.used)');
                         console.log(openCells.first());
                         openCells.first().addClass('used');
-                        openCells.first().addClass('player2');
+                        openCells.first().attr('selected', 'ai');
                         openCells.first().css('background', 'red');
                         tickTackToe.state.nextTurn();
                         tickTackToe.modules.board.processBoard();
@@ -77,6 +82,7 @@
                             result = true;
                         }
                             
+                        var $cells = $('.cell');
                         // check for win x axis
                         // check for win y axis
                         // check for win horz
